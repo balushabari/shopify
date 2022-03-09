@@ -1,0 +1,254 @@
+{
+  "Envelope": {
+    "Header": null,
+    "Body": {
+      "CreateOrder": {
+        "token": "LTBN6MOPReoUJNK6NwFLrUMQ45N43SP0BauVXigZLfLOrYRMZEVhWHEKojOKV/7C0m2aa3PsjGxw6DUWU0nKgaFoDaK8ViSvctLiLWHV/mSVgMG3y4iZmq5BeR9dLuxwkBhn1QimQfL/h1e+HG3KtftF0bKS91Bbpiya7Cz6H3fQFhjEmSwM3NB124I2bimupZRk88GVYT8SuQTsD1sVJ9ybeJxFG4JsLszbwBE8P4ejvrspgcw59n9ev1+ABvZzuv9UBRsqT1JQXp7LlF6fAqo49+Zor6V9SzG1w3BrNwM7+/vuunv3Wo7EVD4Pe1szzj+kFotAAMP4N7ILFB8amD24rbzc4BgAaKNbsi/nZSg+M8eNo0qzJBLpGrPJtRGGNV1qVamRybswO82s4RBHfupjBTz7L6cnh2H0xJXo8YZXnoX7zX//ZVPmWBN9Hkg7bVtluSh3ZUSutVMRAPlOZyjMnTzkDXReJJN/BsSepDrDGmdLdnwGlHkFm0HPd70jWtGV3ylTqJadwh83meVgHkk+XwB+oBhb/IvStnjiI/BQR1Zni71EauTWsSjpj0c71CoG8pE2aekZcal20uywwRMKDd/qkf8uakD2GbwrkP1WidaS1ZcQWUhHzMovQNHKtzTnxu/MVK3wI+gjSR3Y/qv/uYXVexKDBFc2k+QHh2IEg36NBGq/DrwSWAfUhstrU1HPoCCD/18f+aHTU7BFdIsnOyPEHyX8SGDfofKRUD9KudObDSNvN9r73cqSEhn6K+Oq33TbfVueCs7/jxm2Ud+xU++FC1tgy0v1YsgNnu+fJCotPeL+o1NINjd7sFPFIw7FkwWLCEs+E5hwt12BVrX/Vizca37yNOg1o/iYHzw33cEVPUINaHEhyRhe9VhZcZFv958gZVeGxrpwjaD7RZ2ifY/7qZnHlhR5SY6a2Jh+4sPQ/N6F8HdpJ3VeP223+DNS4pTJwFYjC0iMBbUBWwW5LOhccWeD/9aTeIy2i0HXPbJr6oZYwp9diMCKRfJNbjUFxyTbn12EzIb775Gg0A==",
+        "order": {
+          "BillingAddress": {
+            "Address1": "1200 Lakeside Pkwy",
+            "Address2": null,
+            "Address3": null,
+            "City": "Flower Mound",
+            "CountryCode": "US",
+            "FirstName": "Funi",
+            "LastName": "QA",
+            "PostalCode": "75028",
+            "Province": "TX"
+          },
+          "Currency": "USD",
+          "Customer": {
+            "Email": "krishnarjun.chelikani@funimation.com",
+            "ExternalCustomerId": "00026001",
+            "FirstName": "Testing",
+            "LastName": "Izuku",
+            "Phone": "1112223333"
+          },
+          "Discounts": "11.21",
+          "ExternalOrderId": "4648417034463",
+          "LastUpdatedUtc": "2022-01-19T06:25:51.985Z",
+          "LineItems": {
+            "OrderLineItem": {
+              "CustomAttributes": {
+                "CustomAttribute": {
+                  "Name": "Width",
+                  "Value": "5"
+                },
+                "CustomAttribute": {
+                  "Name": "Color",
+                  "Value": null
+                },
+                "CustomAttribute": {
+                  "Name": "Size",
+                  "Value": null
+                },
+                "CustomAttribute": {
+                  "Name": "ProductType",
+                  "Value": "standard"
+                },
+                "CustomAttribute": {
+                  "Name": "UPC",
+                  "Value": "670711180386"
+                },
+                "CustomAttribute": {
+                  "Name": "Righttype",
+                  "Value": "Merchandise: Tangible Goods"
+                },
+                "CustomAttribute": {
+                  "Name": "ProductTaxCode",
+                  "Value": "standard"
+                },
+                "CustomAttribute": {
+                  "Name": "NetsuiteInternalId",
+                  "Value": "8089"
+                },
+                "CustomAttribute": {
+                  "Name": "manufacturersku",
+                  "Value": "MC-GNM-MHA-BAKU"
+                },
+                "CustomAttribute": {
+                  "Name": "ItemName",
+                  "Value": "My Hero Academia - Bakugo Garden Gnome"
+                }
+              },
+              "ExternalLineItemId": "FIG-00266",
+              "IsPreOrder": "false",
+              "LineItemPromotions": {
+                "Promotion": {
+                  "Amount": "-11.21",
+                  "CampaignId": "Premium Plus Ultra Product Discount",
+                  "Percentage": "1.0",
+                  "PromotionId": "SHOP-738-1",
+                  "PromotionName": "SHOP-738-1",
+                  "PromotionType": "ProductDiscount"
+                }
+              },
+              "ProductName": "Bakugo Garden Gnome",
+              "QuantityCancelled": "0",
+              "QuantityInvoiced": "0",
+              "QuantityOrdered": "1",
+              "QuantityReturned": "0",
+              "QuantityShipped": "0",
+              "SKU": "FIG-00266",
+              "Taxes": {
+                "Tax": {
+                  "Amount": "1.17",
+                  "Percentage": "0.062500",
+                  "TaxCode": "TX STATE TAX"
+                },
+                "Tax": {
+                  "Amount": "0.28",
+                  "Percentage": "0.015",
+                  "TaxCode": "TX CITY TAX"
+                },
+                "Tax": {
+                  "Amount": "0.05",
+                  "Percentage": "0.0025",
+                  "TaxCode": "TX SPECIAL TAX"
+                },
+                "Tax": {
+                  "Amount": "0.05",
+                  "Percentage": "0.0025",
+                  "TaxCode": "TX SPECIAL TAX"
+                }
+              },
+              "UnitDiscount": "11.21",
+              "UnitPrice": "29.99",
+              "UnitTax": "0.01"
+            }
+          },
+          "Locale": "en-US",
+          "OrderCompleted": "true",
+          "OrderDateUtc": "2022-01-19T06:25:50.410Z",
+          "OrderId": "56999",
+          "OrderPromotions": null,
+          "OrderStatus": "Authorized",
+          "OrderType": "STD",
+          "Payments": {
+            "Payment": {
+              "Amount": "20.33",
+              "CustomAttributes": {
+                "CustomAttribute": {
+                  "Name": "StripeSource",
+                  "Value": "pm_1KHT6DHBIoGyEgRJYeWwReQW"
+                },
+                "CustomAttribute": {
+                  "Name": "AuthCode",
+                  "Value": "codeValue"
+                },
+                "CustomAttribute": {
+                  "Name": "AvsResponse",
+                  "Value": "approved"
+                },
+                "CustomAttribute": {
+                  "Name": "CscResponse",
+                  "Value": "success"
+                },
+                "CustomAttribute": {
+                  "Name": "Payment",
+                  "Value": "CREDIT_CARD"
+                },
+                "CustomAttribute": {
+                  "Name": "CardExpirationMonth",
+                  "Value": "6"
+                },
+                "CustomAttribute": {
+                  "Name": "CardExpirationYear",
+                  "Value": "2025"
+                },
+                "CustomAttribute": {
+                  "Name": "CardType",
+                  "Value": "Master"
+                },
+                "CustomAttribute": {
+                  "Name": "LastDigits",
+                  "Value": "0001"
+                },
+                "CustomAttribute": {
+                  "Name": "MaskedCardNumber",
+                  "Value": "************0001"
+                },
+                "CustomAttribute": {
+                  "Name": "NameOwner",
+                  "Value": "Krishnarjun Ch"
+                },
+                "CustomAttribute": {
+                  "Name": "PaymentIntentID",
+                  "Value": "pi_3KJXc8HBIoGyEgRJ1DhesqSO"
+                },
+                "CustomAttribute": {
+                  "Name": "StripeCustomer",
+                  "Value": "cus_IWfxtFiYt623Fk"
+                }
+              },
+              "EntryId": "OnLine_1",
+              "PaymentDateUtc": "2022-01-19T06:25:51.803Z",
+              "PaymentGateway": "Stripe",
+              "PaymentMethod": "Online",
+              "PaymentType": "CreditCard",
+              "TransactionId": "pi_3KKPAdHBIoGyEgRJ1Dc9VmBm"
+            }
+          },
+          "QuantityCancelled": "0",
+          "QuantityInvoiced": "0",
+          "QuantityOrdered": "1",
+          "QuantityReturned": "0",
+          "QuantityShipped": "0",
+          "ShipmentStatus": "NOTSHIPPED",
+          "ShippingAddress": {
+            "Address1": "1200 Lakeside Pkwy",
+            "Address2": null,
+            "Address3": null,
+            "AddressId": "175255",
+            "City": "Flower Mound",
+            "CountryCode": "US",
+            "FirstName": "Funi",
+            "LastName": "QA",
+            "PostalCode": "75028",
+            "Province": "TX"
+          },
+          "ShippingMethod": "USPS Priority",
+          "ShippingPromotions": {
+            "Promotion": {
+              "Amount": "-5",
+              "CampaignId": "Evergreen Promotions for Premium Plus Ultra Users",
+              "Percentage": "1.0",
+              "PromotionId": "PremiumPlusUltraShipping",
+              "PromotionName": "PremiumPlusUltraShipping",
+              "PromotionType": "ShippingDiscount"
+            }
+          },
+          "ShippingRateCode": "BST",
+          "ShippingTaxes": {
+            "Tax": {
+              "Amount": "0.0",
+              "Percentage": "0.0625",
+              "TaxCode": "TX STATE TAX"
+            },
+            "Tax": {
+              "Amount": "0.0",
+              "Percentage": "0.015",
+              "TaxCode": "TX CITY TAX"
+            },
+            "Tax": {
+              "Amount": "0.0",
+              "Percentage": "0.0025",
+              "TaxCode": "TX SPECIAL TAX"
+            },
+            "Tax": {
+              "Amount": "0.0",
+              "Percentage": "0.0025",
+              "TaxCode": "TX SPECIAL TAX"
+            }
+          },
+          "ShippingTotal": "0.0000000000",
+          "SiteId": "fun_us_usd",
+          "Source": "SFCC",
+          "TaxInclusive": "false",
+          "Total": "20.33",
+          "TotalTax": "1.55"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,228 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="IntegrationOrderService" targetNamespace="http://tempuri.org/">
+<wsp:Policy wsu:Id="BasicHttpBinding_IntegrationOrderService_policy">
+<wsp:ExactlyOne>
+<wsp:All>
+<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+<wsp:Policy>
+<sp:TransportToken>
+<wsp:Policy>
+<sp:HttpsToken RequireClientCertificate="false"/>
+</wsp:Policy>
+</sp:TransportToken>
+<sp:AlgorithmSuite>
+<wsp:Policy>
+<sp:Basic256/>
+</wsp:Policy>
+</sp:AlgorithmSuite>
+<sp:Layout>
+<wsp:Policy>
+<sp:Strict/>
+</wsp:Policy>
+</sp:Layout>
+</wsp:Policy>
+</sp:TransportBinding>
+</wsp:All>
+</wsp:ExactlyOne>
+</wsp:Policy>
+<wsdl:types>
+<xsd:schema targetNamespace="http://tempuri.org/Imports">
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Order"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Validations"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Shared"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Customer"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Invoice"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/OrderDynamics.Core.BusinessFacade"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Payment"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Return"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/OrderDynamics.Core.BusinessFacade.Returns"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Shipment"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd12" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd13" namespace="http://schemas.orderdynamics.net/2010/11/01"/>
+<xsd:import schemaLocation="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/OrderDynamics.WebServices"/>
+</xsd:schema>
+</wsdl:types>
+<wsdl:message name="IntegrationOrderService_CreateOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:CreateOrder"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_CreateOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:CreateOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_CancelOrder_InputMessage">
+<wsdl:part name="parameters" element="tns:CancelOrder"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_CancelOrder_OutputMessage">
+<wsdl:part name="parameters" element="tns:CancelOrderResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrdersByCustomerID_InputMessage">
+<wsdl:part name="parameters" element="tns:GetOrdersByCustomerID"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrdersByCustomerID_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetOrdersByCustomerIDResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByID_InputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByID"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByID_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByIDResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByShipmentID_InputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByShipmentID"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByShipmentID_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByShipmentIDResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByInvoiceID_InputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByInvoiceID"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_GetOrderByInvoiceID_OutputMessage">
+<wsdl:part name="parameters" element="tns:GetOrderByInvoiceIDResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_RequestReturn_InputMessage">
+<wsdl:part name="parameters" element="tns:RequestReturn"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_RequestReturn_OutputMessage">
+<wsdl:part name="parameters" element="tns:RequestReturnResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_ConfirmReturn_InputMessage">
+<wsdl:part name="parameters" element="tns:ConfirmReturn"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_ConfirmReturn_OutputMessage">
+<wsdl:part name="parameters" element="tns:ConfirmReturnResponse"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_UpdatePayment_InputMessage">
+<wsdl:part name="parameters" element="tns:UpdatePayment"/>
+</wsdl:message>
+<wsdl:message name="IntegrationOrderService_UpdatePayment_OutputMessage">
+<wsdl:part name="parameters" element="tns:UpdatePaymentResponse"/>
+</wsdl:message>
+<wsdl:portType name="IntegrationOrderService">
+<wsdl:operation name="CreateOrder">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/CreateOrder" message="tns:IntegrationOrderService_CreateOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/CreateOrderResponse" message="tns:IntegrationOrderService_CreateOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="CancelOrder">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/CancelOrder" message="tns:IntegrationOrderService_CancelOrder_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/CancelOrderResponse" message="tns:IntegrationOrderService_CancelOrder_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetOrdersByCustomerID">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrdersByCustomerID" message="tns:IntegrationOrderService_GetOrdersByCustomerID_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrdersByCustomerIDResponse" message="tns:IntegrationOrderService_GetOrdersByCustomerID_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByID">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByID" message="tns:IntegrationOrderService_GetOrderByID_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByIDResponse" message="tns:IntegrationOrderService_GetOrderByID_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByShipmentID">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByShipmentID" message="tns:IntegrationOrderService_GetOrderByShipmentID_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByShipmentIDResponse" message="tns:IntegrationOrderService_GetOrderByShipmentID_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByInvoiceID">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByInvoiceID" message="tns:IntegrationOrderService_GetOrderByInvoiceID_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/GetOrderByInvoiceIDResponse" message="tns:IntegrationOrderService_GetOrderByInvoiceID_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="RequestReturn">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/RequestReturn" message="tns:IntegrationOrderService_RequestReturn_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/RequestReturnResponse" message="tns:IntegrationOrderService_RequestReturn_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ConfirmReturn">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/ConfirmReturn" message="tns:IntegrationOrderService_ConfirmReturn_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/ConfirmReturnResponse" message="tns:IntegrationOrderService_ConfirmReturn_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="UpdatePayment">
+<wsdl:input wsaw:Action="http://tempuri.org/IntegrationOrderService/UpdatePayment" message="tns:IntegrationOrderService_UpdatePayment_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/IntegrationOrderService/UpdatePaymentResponse" message="tns:IntegrationOrderService_UpdatePayment_OutputMessage"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="BasicHttpBinding_IntegrationOrderService" type="tns:IntegrationOrderService">
+<wsp:PolicyReference URI="#BasicHttpBinding_IntegrationOrderService_policy"/>
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="CreateOrder">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/CreateOrder" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="CancelOrder">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/CancelOrder" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetOrdersByCustomerID">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/GetOrdersByCustomerID" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByID">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/GetOrderByID" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByShipmentID">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/GetOrderByShipmentID" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetOrderByInvoiceID">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/GetOrderByInvoiceID" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RequestReturn">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/RequestReturn" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConfirmReturn">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/ConfirmReturn" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="UpdatePayment">
+<soap:operation soapAction="http://tempuri.org/IntegrationOrderService/UpdatePayment" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="IntegrationOrderService">
+<wsdl:port name="BasicHttpBinding_IntegrationOrderService" binding="tns:BasicHttpBinding_IntegrationOrderService">
+<soap:address location="https://webservices.sandbox3.orderdynamics.net/Funimation/OrderService.svc"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="create" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="output" format="xml">
+      <types:example format="xml" element="{http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Shared}Address1" location="examples/output1.json"/>
+    </types:type>
+    <types:type name="outputjson" format="json">
+      <types:shape format="weave" example="examples/outputjson.json"><![CDATA[%dw 2.0
+
+type outputjson = {|
+  Envelope: {|
+    Header: Null, 
+    Body: {|
+      CreateOrder: {|
+        token: String, 
+        order: {|
+          BillingAddress: {|
+            Address1: String, 
+            Address2: Null, 
+            Address3: Null, 
+            City: String, 
+            CountryCode: String, 
+            FirstName: String, 
+            LastName: String, 
+            PostalCode: String, 
+            Province: String
+          |}, 
+          Currency: String, 
+          Customer: {|
+            Email: String, 
+            ExternalCustomerId: String, 
+            FirstName: String, 
+            LastName: String, 
+            Phone: String
+          |}, 
+          Discounts: String, 
+          ExternalOrderId: String, 
+          LastUpdatedUtc: String, 
+          LineItems: {|
+            OrderLineItem: {|
+              CustomAttributes: {|
+                CustomAttribute: {|
+                  Name: String, 
+                  Value: String
+                |}
+              |}, 
+              ExternalLineItemId: String, 
+              IsPreOrder: String, 
+              LineItemPromotions: {|
+                Promotion: {|
+                  Amount: String, 
+                  CampaignId: String, 
+                  Percentage: String, 
+                  PromotionId: String, 
+                  PromotionName: String, 
+                  PromotionType: String
+                |}
+              |}, 
+              ProductName: String, 
+              QuantityCancelled: String, 
+              QuantityInvoiced: String, 
+              QuantityOrdered: String, 
+              QuantityReturned: String, 
+              QuantityShipped: String, 
+              SKU: String, 
+              Taxes: {|
+                Tax: {|
+                  Amount: String, 
+                  Percentage: String, 
+                  TaxCode: String
+                |}
+              |}, 
+              UnitDiscount: String, 
+              UnitPrice: String, 
+              UnitTax: String
+            |}
+          |}, 
+          Locale: String, 
+          OrderCompleted: String, 
+          OrderDateUtc: String, 
+          OrderId: String, 
+          OrderPromotions: Null, 
+          OrderStatus: String, 
+          OrderType: String, 
+          Payments: {|
+            Payment: {|
+              Amount: String, 
+              CustomAttributes: {|
+                CustomAttribute: {|
+                  Name: String, 
+                  Value: String
+                |}
+              |}, 
+              EntryId: String, 
+              PaymentDateUtc: String, 
+              PaymentGateway: String, 
+              PaymentMethod: String, 
+              PaymentType: String, 
+              TransactionId: String
+            |}
+          |}, 
+          QuantityCancelled: String, 
+          QuantityInvoiced: String, 
+          QuantityOrdered: String, 
+          QuantityReturned: String, 
+          QuantityShipped: String, 
+          ShipmentStatus: String, 
+          ShippingAddress: {|
+            Address1: String, 
+            Address2: Null, 
+            Address3: Null, 
+            AddressId: String, 
+            City: String, 
+            CountryCode: String, 
+            FirstName: String, 
+            LastName: String, 
+            PostalCode: String, 
+            Province: String
+          |}, 
+          ShippingMethod: String, 
+          ShippingPromotions: {|
+            Promotion: {|
+              Amount: String, 
+              CampaignId: String, 
+              Percentage: String, 
+              PromotionId: String, 
+              PromotionName: String, 
+              PromotionType: String
+            |}
+          |}, 
+          ShippingRateCode: String, 
+          ShippingTaxes: {|
+            Tax: {|
+              Amount: String, 
+              Percentage: String, 
+              TaxCode: String
+            |}
+          |}, 
+          ShippingTotal: String, 
+          SiteId: String, 
+          Source: String, 
+          TaxInclusive: String, 
+          Total: String, 
+          TotalTax: String
+        |}
+      |}
+    |}
+  |}
+|} {"example": "{\\\"Envelope\\\":{\\\"Header\\\":null,\\\"Body\\\":{\\\"CreateOrder\\\":{\\\"token\\\":\\\"LTBN6MOPReoUJNK6NwFLrUMQ45N43SP0BauVXigZLfLOrYRMZEVhWHEKojOKV\\/7C0m2aa3PsjGxw6DUWU0nKgaFoDaK8ViSvctLiLWHV\\/mSVgMG3y4iZmq5BeR9dLuxwkBhn1QimQfL\\/h1e+HG3KtftF0bKS91Bbpiya7Cz6H3fQFhjEmSwM3NB124I2bimupZRk88GVYT8SuQTsD1sVJ9ybeJxFG4JsLszbwBE8P4ejvrspgcw59n9ev1+ABvZzuv9UBRsqT1JQXp7LlF6fAqo49+Zor6V9SzG1w3BrNwM7+\\/vuunv3Wo7EVD4Pe1szzj+kFotAAMP4N7ILFB8amD24rbzc4BgAaKNbsi\\/nZSg+M8eNo0qzJBLpGrPJtRGGNV1qVamRybswO82s4RBHfupjBTz7L6cnh2H0xJXo8YZXnoX7zX\\/\\/ZVPmWBN9Hkg7bVtluSh3ZUSutVMRAPlOZyjMnTzkDXReJJN\\/BsSepDrDGmdLdnwGlHkFm0HPd70jWtGV3ylTqJadwh83meVgHkk+XwB+oBhb\\/IvStnjiI\\/BQR1Zni71EauTWsSjpj0c71CoG8pE2aekZcal20uywwRMKDd\\/qkf8uakD2GbwrkP1WidaS1ZcQWUhHzMovQNHKtzTnxu\\/MVK3wI+gjSR3Y\\/qv\\/uYXVexKDBFc2k+QHh2IEg36NBGq\\/DrwSWAfUhstrU1HPoCCD\\/18f+aHTU7BFdIsnOyPEHyX8SGDfofKRUD9KudObDSNvN9r73cqSEhn6K+Oq33TbfVueCs7\\/jxm2Ud+xU++FC1tgy0v1YsgNnu+fJCotPeL+o1NINjd7sFPFIw7FkwWLCEs+E5hwt12BVrX\\/Vizca37yNOg1o\\/iYHzw33cEVPUINaHEhyRhe9VhZcZFv958gZVeGxrpwjaD7RZ2ifY\\/7qZnHlhR5SY6a2Jh+4sPQ\\/N6F8HdpJ3VeP223+DNS4pTJwFYjC0iMBbUBWwW5LOhccWeD\\/9aTeIy2i0HXPbJr6oZYwp9diMCKRfJNbjUFxyTbn12EzIb775Gg0A==\\\",\\\"order\\\":{\\\"BillingAddress\\\":{\\\"Address1\\\":\\\"1200 Lakeside Pkwy\\\",\\\"Address2\\\":null,\\\"Address3\\\":null,\\\"City\\\":\\\"Flower Mound\\\",\\\"CountryCode\\\":\\\"US\\\",\\\"FirstName\\\":\\\"Funi\\\",\\\"LastName\\\":\\\"QA\\\",\\\"PostalCode\\\":\\\"75028\\\",\\\"Province\\\":\\\"TX\\\"},\\\"Currency\\\":\\\"USD\\\",\\\"Customer\\\":{\\\"Email\\\":\\\"krishnarjun.chelikani@funimation.com\\\",\\\"ExternalCustomerId\\\":\\\"00026001\\\",\\\"FirstName\\\":\\\"Testing\\\",\\\"LastName\\\":\\\"Izuku\\\",\\\"Phone\\\":\\\"1112223333\\\"},\\\"Discounts\\\":\\\"11.21\\\",\\\"ExternalOrderId\\\":\\\"4648417034463\\\",\\\"LastUpdatedUtc\\\":\\\"2022-01-19T06:25:51.985Z\\\",\\\"LineItems\\\":{\\\"OrderLineItem\\\":{\\\"CustomAttributes\\\":{\\\"CustomAttribute\\\":{\\\"Name\\\":\\\"ItemName\\\",\\\"Value\\\":\\\"My Hero Academia - Bakugo Garden Gnome\\\"}},\\\"ExternalLineItemId\\\":\\\"FIG-00266\\\",\\\"IsPreOrder\\\":\\\"false\\\",\\\"LineItemPromotions\\\":{\\\"Promotion\\\":{\\\"Amount\\\":\\\"-11.21\\\",\\\"CampaignId\\\":\\\"Premium Plus Ultra Product Discount\\\",\\\"Percentage\\\":\\\"1.0\\\",\\\"PromotionId\\\":\\\"SHOP-738-1\\\",\\\"PromotionName\\\":\\\"SHOP-738-1\\\",\\\"PromotionType\\\":\\\"ProductDiscount\\\"}},\\\"ProductName\\\":\\\"Bakugo Garden Gnome\\\",\\\"QuantityCancelled\\\":\\\"0\\\",\\\"QuantityInvoiced\\\":\\\"0\\\",\\\"QuantityOrdered\\\":\\\"1\\\",\\\"QuantityReturned\\\":\\\"0\\\",\\\"QuantityShipped\\\":\\\"0\\\",\\\"SKU\\\":\\\"FIG-00266\\\",\\\"Taxes\\\":{\\\"Tax\\\":{\\\"Amount\\\":\\\"0.05\\\",\\\"Percentage\\\":\\\"0.0025\\\",\\\"TaxCode\\\":\\\"TX SPECIAL TAX\\\"}},\\\"UnitDiscount\\\":\\\"11.21\\\",\\\"UnitPrice\\\":\\\"29.99\\\",\\\"UnitTax\\\":\\\"0.01\\\"}},\\\"Locale\\\":\\\"en-US\\\",\\\"OrderCompleted\\\":\\\"true\\\",\\\"OrderDateUtc\\\":\\\"2022-01-19T06:25:50.410Z\\\",\\\"OrderId\\\":\\\"56999\\\",\\\"OrderPromotions\\\":null,\\\"OrderStatus\\\":\\\"Authorized\\\",\\\"OrderType\\\":\\\"STD\\\",\\\"Payments\\\":{\\\"Payment\\\":{\\\"Amount\\\":\\\"20.33\\\",\\\"CustomAttributes\\\":{\\\"CustomAttribute\\\":{\\\"Name\\\":\\\"StripeCustomer\\\",\\\"Value\\\":\\\"cus_IWfxtFiYt623Fk\\\"}},\\\"EntryId\\\":\\\"OnLine_1\\\",\\\"PaymentDateUtc\\\":\\\"2022-01-19T06:25:51.803Z\\\",\\\"PaymentGateway\\\":\\\"Stripe\\\",\\\"PaymentMethod\\\":\\\"Online\\\",\\\"PaymentType\\\":\\\"CreditCard\\\",\\\"TransactionId\\\":\\\"pi_3KKPAdHBIoGyEgRJ1Dc9VmBm\\\"}},\\\"QuantityCancelled\\\":\\\"0\\\",\\\"QuantityInvoiced\\\":\\\"0\\\",\\\"QuantityOrdered\\\":\\\"1\\\",\\\"QuantityReturned\\\":\\\"0\\\",\\\"QuantityShipped\\\":\\\"0\\\",\\\"ShipmentStatus\\\":\\\"NOTSHIPPED\\\",\\\"ShippingAddress\\\":{\\\"Address1\\\":\\\"1200 Lakeside Pkwy\\\",\\\"Address2\\\":null,\\\"Address3\\\":null,\\\"AddressId\\\":\\\"175255\\\",\\\"City\\\":\\\"Flower Mound\\\",\\\"CountryCode\\\":\\\"US\\\",\\\"FirstName\\\":\\\"Funi\\\",\\\"LastName\\\":\\\"QA\\\",\\\"PostalCode\\\":\\\"75028\\\",\\\"Province\\\":\\\"TX\\\"},\\\"ShippingMethod\\\":\\\"USPS Priority\\\",\\\"ShippingPromotions\\\":{\\\"Promotion\\\":{\\\"Amount\\\":\\\"-5\\\",\\\"CampaignId\\\":\\\"Evergreen Promotions for Premium Plus Ultra Users\\\",\\\"Percentage\\\":\\\"1.0\\\",\\\"PromotionId\\\":\\\"PremiumPlusUltraShipping\\\",\\\"PromotionName\\\":\\\"PremiumPlusUltraShipping\\\",\\\"PromotionType\\\":\\\"ShippingDiscount\\\"}},\\\"ShippingRateCode\\\":\\\"BST\\\",\\\"ShippingTaxes\\\":{\\\"Tax\\\":{\\\"Amount\\\":\\\"0.0\\\",\\\"Percentage\\\":\\\"0.0025\\\",\\\"TaxCode\\\":\\\"TX SPECIAL TAX\\\"}},\\\"ShippingTotal\\\":\\\"0.0000000000\\\",\\\"SiteId\\\":\\\"fun_us_usd\\\",\\\"Source\\\":\\\"SFCC\\\",\\\"TaxInclusive\\\":\\\"false\\\",\\\"Total\\\":\\\"20.33\\\",\\\"TotalTax\\\":\\\"1.55\\\"}}}}}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#47ecbead-de04-49f3-9ae0-ffda14ad3a30">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="create"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="create"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#d21636f3-4674-4c91-9239-5b72f179bd49"/>
+  <types:enrichment select="#0c8ecd58-dd55-4a1b-a3da-82f737f40feb"/>
+</types:mule>

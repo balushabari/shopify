@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:shopify="http://www.mulesoft.org/schema/mule/shopify" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/shopify http://www.mulesoft.org/schema/mule/shopify/current/mule-shopify.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<shopify:config name="Shopify_Connector_Config" doc:name="Shopify Connector Config" doc:id="7f137894-017d-4c46-ac27-4cf40838eb60" >
+		<shopify:basic-auth-connection username="e5a58c225f3b19bff4ef1f04347f4e41" password="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" baseUri="https://mulesoftpoc.myshopify.com/" />
+	</shopify:config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="48b9df31-65c1-4add-88aa-d957d65f7604" >
+		<http:request-connection host="localhost" port="8081" protocol="HTTPS"/>
+	</http:request-config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9d3f7daa-71c7-4c53-9808-9b15e5d2dc3f" >
+		<http:listener-connection host="0.0.0.0" port="8081" >
+			<reconnection >
+				<reconnect frequency="5000" />
+			</reconnection>
+		</http:listener-connection>
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config2" doc:name="Web Service Consumer Config" doc:id="1222f7f1-45f2-4e44-a1fc-f8f0a7763fa3" >
+		<wsc:connection wsdlLocation="test.wsdl" service="AuthenticationService" port="BasicHttpBinding_IAuthenticationService_IAuthenticationService" address="https://webservices.sandbox3.orderdynamics.net/Funimation/AuthenticationService.svc"/>
+	</wsc:config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="9a641eeb-da1a-4a32-97a4-475a8c99e2f8" >
+		<wsc:connection wsdlLocation="test1.wsdl" service="IntegrationOrderService" port="BasicHttpBinding_IntegrationOrderService" address="https://webservices.sandbox3.orderdynamics.net/Funimation/AuthenticationService.svc" >
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<flow name="shopifypocFlow1" doc:id="5c310262-6149-49b0-8615-5ceffb76ae69" >
+		<http:listener doc:name="Listener" doc:id="6d4762c3-6a6c-4ca1-87dd-723d69f75bae" config-ref="HTTP_Listener_config" path="/orderlist"/>
+		<!-- <http:request method="GET" doc:name="Request order from shopify" doc:id="08122fa9-5bd2-4f3c-90fb-62ebb7c05629" config-ref="HTTP_Request_configuration" url="https://mulesoftpoc.myshopify.com/"/> -->
+		<logger level="INFO" doc:name="Logger" doc:id="5e9b60b4-8656-4bda-9d4b-74a2d8be5e72" message="flowstarted #[payload]"/>
+		<shopify:order-list doc:name="Order List" doc:id="98492b47-1ef2-41a2-9356-021c752e7e2c" config-ref="Shopify_Connector_Config" limitQueryParam="50"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4d1de3a0-0eac-4ace-a0ca-f0b20f1e254c" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="298360f8-aff9-4b28-a63d-de8903bd2028">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e1a2f711-85a7-40de-9422-58ad5244d727" message="succesfully retreived order #[payload]"/>
+	</flow>
+	<flow name="shopifypocFlow2" doc:id="9526ed85-a90e-481e-a08d-1a9b9a32e22c" >
+		<http:listener doc:name="Listener" doc:id="d931788e-4868-4bed-bf36-148bd2673717" config-ref="HTTP_Listener_config" path="/pushorders"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d7cddbf4-5907-4610-bac0-03be7dc79c7b" message="flow started"/>
+		<set-variable value="#[output application/json&#10;---&#10;attributes as String]" doc:name="Set Variable" doc:id="0c8ecd58-dd55-4a1b-a3da-82f737f40feb" variableName="orderid"/>
+		<logger level="INFO" doc:name="Logger" doc:id="047816ee-e35f-47a6-801d-ff2a617c8715" message="flowstarted #[payload]" />
+		<shopify:order-get orderIdUriParam="#[vars.orderid as Number]" doc:name="Order Get" doc:id="4b249597-22bc-4f18-8e85-c1bff98e6355" config-ref="Shopify_Connector_Config" />
+		<logger level="INFO" doc:name="Logger" doc:id="50f5b9a5-764c-4bb0-9b27-fc84a39753cd" message="#[payload]" />
+		<ee:transform doc:name="Transform Message" doc:id="d21636f3-4674-4c91-9239-5b72f179bd49">
+			<ee:message>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="orderData" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="13da0f89-64ba-46e1-976a-7e52e941be09" message="response #[payload]" />
+		<ee:transform doc:name="Transform Message" doc:id="a770a134-ce17-4802-a2c7-9120eacafded" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="authenticate" ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://tempuri.org/
+---
+{
+	ns0#Authenticate: {
+		ns0#storeId: "8BC2BA9F-5ED6-4E20-9500-CED460031E9E",
+		ns0#accessKey: "/zxyAC0NaBzQ9IcoIuAULtVq5jL+an27pts/BhuGL8bqnJdr9prBaHAd+kKeHSNlCsegIa2V/HMUFn13hwlC13rB"
+	}
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="cb189df6-c5ca-4a60-9b0b-ac9092e17e17" config-ref="Web_Service_Consumer_Config2" operation="Authenticate">
+			<wsc:message >
+				<wsc:body ><![CDATA[#[vars.authenticate]]]></wsc:body>
+			</wsc:message>
+		</wsc:consume>
+		<set-variable value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload.body.AuthenticateResponse.AuthenticateResult.Result]" doc:name="Set Variable" doc:id="02f3b49a-0500-4905-873f-38c9392777ad" variableName="token"/>
+		<ee:transform doc:name="create order request" doc:id="2974e22f-bbac-422e-a501-df0c53883ff5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://tempuri.org/
+ns ns01 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Order
+ns ns02 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Shared
+ns ns03 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Customer
+ns ns04 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Invoice
+ns ns05 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Shipment
+ns ns06 http://schemas.microsoft.com/2003/10/Serialization/Arrays
+ns ns07 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Return
+ns ns08 http://schemas.datacontract.org/2004/07/FunimationSDK.Models.Payment
+---
+{
+	ns0#CreateOrder: {
+		ns0#token: null,
+		ns0#order: {
+			ns01#BillingAddress: {
+				ns02#Address1: null,
+				ns02#Address2: null,
+				ns02#Address3: null,
+				ns02#AddressId: null,
+				ns02#City: null,
+				ns02#CompanyName: null,
+				ns02#CountryCode: null,
+				ns02#CustomAttributes: {
+					ns02#CustomAttribute: {
+						ns02#Name: null
+					}
+				},
+				ns02#FirstName: null,
+				ns02#LastName: null,
+				ns02#PostalCode: null,
+				ns02#Province: null
+			},
+			ns01#Comment: null,
+			ns01#Currency: null,
+			ns01#CustomAttributes: {
+				ns02#CustomAttribute: {
+					ns02#Name: null,
+					ns02#Value: null
+				}
+			},
+			ns01#Customer: {
+				ns03#BirthYear: null,
+				ns03#CustomAttributes: {
+					ns02#CustomAttribute: {
+						ns02#Name: null,
+						ns02#Value: null
+					}
+				},
+				ns03#Email: null,
+				ns03#ExternalCustomerId: null,
+				ns03#FirstName: null,
+				ns03#LastName: null,
+				ns03#Phone: null
+			},
+			ns01#Discounts: null,
+			ns01#ExternalOrderId: vars.orderid as Number,
+			ns01#InvoiceStatus: null,
+			ns01#Invoices: {
+				ns04#Invoice: {
+					ns04#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns04#DateCreatedUtc: null,
+					ns04#DiscountTotal: null,
+					ns04#InvoiceId: null,
+					ns04#LastUpdatedUtc: null,
+					ns04#LineItems: {
+						ns04#InvoiceLineItem: {
+							ns04#ExternalLineItemId: null,
+							ns04#OrderDetailId: null,
+							ns04#QuantityInvoiced: null,
+							ns04#SKU: null,
+							ns04#Taxes: {
+								ns02#Tax: {
+									ns02#Amount: null,
+									ns02#Percentage: null,
+									ns02#TaxCode: null
+								}
+							},
+							ns04#UnitDiscount: null,
+							ns04#UnitPrice: null,
+							ns04#UnitTax: null
+						}
+					},
+					ns04#ReturnReason: null,
+					ns04#ShippingTaxes: {
+						ns02#Tax: {
+							ns02#Amount: null,
+							ns02#Percentage: null,
+							ns02#TaxCode: null
+						}
+					},
+					ns04#ShippingTotal: null,
+					ns04#Status: null,
+					ns04#TaxTotal: null,
+					ns04#Taxes: {
+						ns02#Tax: {
+							ns02#Amount: null,
+							ns02#Percentage: null,
+							ns02#TaxCode: null
+						}
+					},
+					ns04#Total: null,
+					ns04#Type: null
+				}
+			},
+			ns01#LastUpdatedUtc: null,
+			ns01#LineItems: {
+				ns01#OrderLineItem: {
+					ns01#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns01#ExternalLineItemId: null,
+					ns01#IsPreOrder: null,
+					ns01#LineItemPromotions: {
+						ns01#Promotion: {
+							ns01#Amount: null,
+							ns01#CampaignId: null,
+							ns01#CouponCode: null,
+							ns01#CustomAttributes: {
+								ns02#CustomAttribute: {
+									ns02#Name: null,
+									ns02#Value: null
+								}
+							},
+							ns01#Percentage: null,
+							ns01#PromotionId: null,
+							ns01#PromotionName: null,
+							ns01#PromotionType: null
+						}
+					},
+					ns01#OrderDetailId: null,
+					ns01#ProductName: null,
+					ns01#QuantityCancelled: null,
+					ns01#QuantityInvoiced: null,
+					ns01#QuantityOrdered: null,
+					ns01#QuantityReturned: null,
+					ns01#QuantityShipped: null,
+					ns01#SKU: null,
+					ns01#Taxes: {
+						ns02#Tax: {
+							ns02#Amount: null,
+							ns02#Percentage: null,
+							ns02#TaxCode: null
+						}
+					},
+					ns01#UnitDiscount: null,
+					ns01#UnitPrice: null,
+					ns01#UnitTax: null
+				}
+			},
+			ns01#Locale: null,
+			ns01#OrderCompleted: null,
+			ns01#OrderDateUtc: null,
+			ns01#OrderId: null,
+			ns01#OrderStatus: null,
+			ns01#OrderType: null,
+			ns01#PaymentSummaries: {
+				ns08#PaymentSummary: {
+					ns08#AmountAuthorized: null,
+					ns08#AmountCaptured: null,
+					ns08#PaymentGateway: null,
+					ns08#Status: null,
+					ns08#TotalAmount: null
+				}
+			},
+			ns01#Payments: {
+				ns02#Payment: {
+					ns02#Amount: null,
+					ns02#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns02#EntryId: null,
+					ns02#InvoiceId: null,
+					ns02#PaymentDateUtc: null,
+					ns02#PaymentGateway: null,
+					ns02#PaymentMethod: null,
+					ns02#PaymentType: null,
+					ns02#TransactionId: null
+				}
+			},
+			ns01#QuantityCancelled: null,
+			ns01#QuantityInvoiced: null,
+			ns01#QuantityOrdered: null,
+			ns01#QuantityReturned: null,
+			ns01#QuantityShipped: null,
+			ns01#ReturnRequests: {
+				ns07#ReturnRequest: {
+					ns07#Comment: null,
+					ns07#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns07#ExternalOrderId: vars.orderid as Number,
+					ns07#IsCommitted: null,
+					ns07#ReferenceNumber: null,
+					ns07#ReturnDateUtc: null,
+					ns07#ReturnFixedDiscount: null,
+					ns07#ReturnId: null,
+					ns07#ReturnInvoiceId: null,
+					ns07#ReturnRequestLineItems: {
+						ns07#ReturnRequestLineItem: {
+							ns07#CustomAttributes: {
+								ns02#CustomAttribute: {
+									ns02#Name: null,
+									ns02#Value: null
+								}
+							},
+							ns07#LineItemId: null,
+							ns07#ReturnQuantity: null,
+							ns07#ReturnReason: null,
+							ns07#ReturnReasonCode: null,
+							ns07#SKU: null
+						}
+					},
+					ns07#ReturnStatus: null,
+					ns07#ShippingRefundAmount: null,
+					ns07#Source: null
+				}
+			},
+			ns01#RoutingId: null,
+			ns01#ShipmentStatus: null,
+			ns01#Shipments: {
+				ns05#Shipment: {
+					ns05#CreatedDateUtc: null,
+					ns05#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns05#LastUpdatedDateUtc: null,
+					ns05#RouteDestination: null,
+					ns05#RouteDestinationName: null,
+					ns05#ShipmentId: null,
+					ns05#ShipmentLineItems: {
+						ns05#ShipmentLineItem: {
+							ns05#CustomAttributes: {
+								ns02#CustomAttribute: {
+									ns02#Name: null,
+									ns02#Value: null
+								}
+							},
+							ns05#ExternalLineItemId: null,
+							ns05#Id: null,
+							ns05#OrderDetailId: null,
+							ns05#QuantityShipped: null,
+							ns05#SKU: null,
+							ns05#TrackingUrl: null
+						}
+					},
+					ns05#ShipmentStatus: null,
+					ns05#ShipmentType: null,
+					ns05#ShippedDateUtc: null,
+					ns05#ShippingAddress: {
+						ns02#Address1: null,
+						ns02#Address2: null,
+						ns02#Address3: null,
+						ns02#AddressId: null,
+						ns02#City: null,
+						ns02#CompanyName: null,
+						ns02#CountryCode: null,
+						ns02#CustomAttributes: {
+							ns02#CustomAttribute: {
+								ns02#Name: null,
+								ns02#Value: null
+							}
+						},
+						ns02#FirstName: null,
+						ns02#LastName: null,
+						ns02#PostalCode: null,
+						ns02#Province: null
+					},
+					ns05#ShippingDestination: null,
+					ns05#ShippingDestinationName: null,
+					ns05#ShippingMethod: null,
+					ns05#ShippingRateCode: null,
+					ns05#SourceRouteId: null,
+					ns05#TrackingNumbers: {
+						ns06#string: null
+					}
+				}
+			},
+			ns01#ShippingAddress: {
+				ns02#Address1: null,
+				ns02#Address2: null,
+				ns02#Address3: null,
+				ns02#AddressId: null,
+				ns02#City: null,
+				ns02#CompanyName: null,
+				ns02#CountryCode: null,
+				ns02#CustomAttributes: {
+					ns02#CustomAttribute: {
+						ns02#Name: null,
+						ns02#Value: null
+					}
+				},
+				ns02#FirstName: null,
+				ns02#LastName: null,
+				ns02#PostalCode: null,
+				ns02#Province: null
+			},
+			ns01#ShippingMethod: null,
+			ns01#ShippingPromotions: {
+				ns01#Promotion: {
+					ns01#Amount: null,
+					ns01#CampaignId: null,
+					ns01#CouponCode: null,
+					ns01#CustomAttributes: {
+						ns02#CustomAttribute: {
+							ns02#Name: null,
+							ns02#Value: null
+						}
+					},
+					ns01#Percentage: null,
+					ns01#PromotionId: null,
+					ns01#PromotionName: null,
+					ns01#PromotionType: null
+				}
+			},
+			ns01#ShippingRateCode: null,
+			ns01#ShippingTaxes: {
+				ns02#Tax: {
+					ns02#Amount: null,
+					ns02#Percentage: null,
+					ns02#TaxCode: null
+				}
+			},
+			ns01#ShippingTotal: null,
+			ns01#SiteId: null,
+			ns01#Source: null,
+			ns01#TaxInclusive: null,
+			ns01#Total: null,
+			ns01#TotalTax: null
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="8cbff9ca-4d36-4d69-b562-7dc4b7f0765b" config-ref="Web_Service_Consumer_Config" operation="CreateOrder" />
+		<logger level="INFO" doc:name="Logger" doc:id="085163df-a560-4909-8c6b-9d7340dc855a" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="ed64d459-e702-43f4-8552-c7779ecd2d03" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="f0ba5507-91bc-4204-bae6-0a022dbacf86" message="#[payload]"/>
+	</flow>
+</mule>
